@@ -1,8 +1,12 @@
 # This file may be used to create an environment using:
 # $ conda create --name <env> --file <this file>
 # platform: osx-64
+aniso8601=1.1.0=py35_0
+blinker=1.4=py35_0
 click=6.6=py35_0
 flask=0.12=py35_0
+flask-restful=0.3.5=py35_0
+flask-sqlalchemy=2.1=py35_0
 itsdangerous=0.24=py35_0
 jinja2=2.9.5=py35_0
 libpq=9.5.4=0
@@ -11,8 +15,12 @@ openssl=1.0.2k=1
 pip=9.0.1=py35_1
 psycopg2=2.6.2=py35_0
 python=3.5.3=1
+python-dateutil=2.6.0=py35_0
+pytz=2016.10=py35_0
 readline=6.2=2
 setuptools=27.2.0=py35_0
+six=1.10.0=py35_0
+sqlalchemy=1.1.6=py35_0
 sqlite=3.13.0=0
 tk=8.5.18=0
 werkzeug=0.11.15=py35_0
