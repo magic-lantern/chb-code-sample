@@ -1,0 +1,121 @@
+body {
+  padding-right: 0px !important
+}
+.modal-open {
+  overflow-y: auto;
+}
+.dl-horizontal dt {
+  width: 110px;
+}
+.dl-horizontal dd {
+  margin-left: 120px;
+}
+.problembutton, .labbutton {
+  font-family: Georgia, serif;
+  font-size: 2rem;
+  line-height: 1rem;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  padding: 6px;
+  background: #337ab7;
+  border: 2px solid #2e6da4;
+  color: #FFF;
+  text-align: center;
+  cursor: pointer;
+}
+.headerbutton {
+  position: absolute;
+  right: 3vw;
+  top: 3vh;
+}
+span .patientspan {
+  display: block;
+  margin-bottom: 10px;
+}
+.bg-infolight-a {
+  background-color: #eef7fb;
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.bg-infolight-b {
+  background-color: #fbf2ee;
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.info {
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.topspacing {
+  margin-top: 1rem;
+}
+dd > span, .faded {
+  color: #AAA;
+  display: inline;
+  margin-bottom: 0;
+
+}
+.lead {
+  margin-bottom: 10px;
+  margin-left: 15px;
+}
+.test {
+  margin-left: 7.2%;
+}
+.patientinfobutton {
+  margin-right: 100px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.zeroborder {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+.note {
+  display: inline;
+  color: red;
+}
+.modal-dialog {
+  width: 700px;
+}
+.selectedimage {
+  border: 6px solid blue;
+}
+.img-rounded {
+  border: 3px solid #B0B0B0;
+  margin: 1rem;
+}
+.navcontent {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-right: 1rem;
+}
+.fa {
+  font-size: 125%;
+}
+.fa-check-circle-o {
+  color: green;
+}
+.fa-times-circle-o {
+  color: red;
+}
+.list > p {
+  margin: 0 0 0 20px
+}
+.radio_group {
+  margin-left: 20px;
+}
+.modal-fixes {
+  width: 650px;
+}
+#about > a {
+  color: #337ab7;
+}
+#general-education {
+  margin-top: 5rem;
+}

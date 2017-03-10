@@ -13,7 +13,7 @@ url_parameters = ['date', 'page']
 # value intentionally set low for easy testing
 PAGE_SIZE = 2
 # value intentionally set low for easy testing
-MAX_REQUESTS = 5
+MAX_REQUESTS = 6
 
 # connect to database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:32771/gallery'
@@ -27,7 +27,7 @@ automapper.prepare(db.engine, reflect=True)
 @app.route('/')
 def hello_world():
     return '<html><body>' \
-           + '<p>JSON API RESTFUL URL available at <a href="/gallery">/gallery</a></p>' \
+           + '<p>RESTFUL URL with JSON response available at <a href="/gallery">/gallery</a></p>' \
            + '<p>Returns JSON array of all SMART applications available</p>' \
            + '<p>Optional parameters:<ul>' \
            + '<li>date - Only applications updated on or newer than date provided will be returned.' \

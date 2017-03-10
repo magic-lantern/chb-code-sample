@@ -1,0 +1,29 @@
+{{#if fc.fhirFailed}}
+  <div class="alert alert-danger" role="alert">
+    Authentication or Loading patient data failed. Click <button type="button" class="btn btn-sm btn-warning" {{action 'override'}}>Override</button> to use fake patient data.
+  </div>
+{{/if}}
+
+{{#unless fc.isAuthenticated}}
+  <div class="alert alert-danger" role="alert">
+    <p class="bg-danger">Patient Context not loaded or not Authenticated, app will not function.</p>
+  </div>
+  {{launch-instructions}}
+{{else}}
+  <h4>Authentication has succeeded.</h4>
+  {{#if fc.isLoading}}
+    <div class="alert alert-info" role="alert">Loading Application... Waiting up to 5 seconds.</div>
+  {{else}}
+    {{#unless fc.fhirFailed}}
+      <h4>Patient Context has loaded.</h4>
+      {{#unless fc.isPediatric}}
+        <div class="alert alert-warning" role="alert">
+          Patient is not a pediatric patient or has a missing/invalid birthdate.
+        </div>
+      {{/unless}}
+    {{/unless}}
+  {{/if}}
+  <br/>
+  <br/>
+{{/unless}}
+{{outlet}}

@@ -42,6 +42,17 @@ Additionally, in order to have the administrative password be something you know
     source activate smart
     conda list --export
 
+### To run application and unittests
+
+By default application runs on port 5000 and binds to all IP addresses on current host.
+
+    python app_gallery.py
+
+To run unit tests
+
+    python app_gallery_tests.py
+
+
 ## Developer notes
 Since I'm using SQLAlchemy automap to generate classes from database introspection, it appears that:
 1. I cannot use Flask's paginate() function. http://stackoverflow.com/questions/18468887/flask-sqlalchemy-pagination-error
