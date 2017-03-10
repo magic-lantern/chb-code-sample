@@ -1,5 +1,7 @@
 # SMART App Gallery Patient Browser
 
+Frontend code sample (est. time 2 hours): Create a prototype of a web based tool to enable app developers to browse the SMART sample patient set to find a list of appropriate patient ids to use when demonstrating their app. This tool should run entirely on the front end and should use the open FHIR endpoint at https://sb-fhir-dstu2.smarthealthit.org/api/smartdstu2/open to retrieve the patient lists and details (I’d suggest using the Patient resource query and the “$everything” operation). Any frontend javascript framework (or none) is acceptable. Functionality that is designed but not implemented can be indicated through failing unit tests or placeholder comments in the code.
+
 Technologies employed:
 * [EmberJS](http://emberjs.com/)
 * [Bootstrap](http://getbootstrap.com/)
