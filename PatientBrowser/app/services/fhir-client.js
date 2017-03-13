@@ -25,6 +25,7 @@ export default Ember.Service.extend({
     encounters: [],
     hasPenicillinAllergy: null,
   },
+  patientList: [],
   patientContext: null,
   fhirclient: null,
   fhirPatient: null,
@@ -45,6 +46,7 @@ export default Ember.Service.extend({
       }
     }
   }),
+  store: Ember.inject.service(),
 
   init() {
     // this not available in callbacks
@@ -76,15 +78,22 @@ export default Ember.Service.extend({
         'type': 'Patient',
         'named' : '$everything'
       }).done(function(patientList){
-        clearTimeout(timeout);
-        self.set('isLoading', false);
+        self.set('patientList', patientList);
+        var store = self.get('store');
         console.log('results');
         console.log(patientList);
         if (!Ember.isNone(patientList.data.entry)) {
           patientList.data.entry.forEach(function(patient) {
             console.log(patient);
+            var patientret = store.createRecord('patient', {
+              'patientId': patient.resource.id
+            });
+            self.readPatient(patientret);
           });
         }
+        // now that all processing has completed successfully, clear timeout and loading flag
+        clearTimeout(timeout);
+        self.set('isLoading', false);
       })
       .fail(function(){
         console.log('called fail function from search');
@@ -96,7 +105,17 @@ export default Ember.Service.extend({
       console.log("service - FHIR script FAILED to load.");
     });
   },
-  readPatient: function() {
+  readPatient: function(patient) {
+    this.fhirclient.api.search({
+      'type': 'Patient',
+      'id' : patient.get('patientId')
+    }).done(function(ret){
+      console.log('readPatient:');
+      console.log(ret);
+    })
+    .fail(function(){
+      console.log('called fail function from readPatient');
+    });
     /*
     FHIR.oauth2.ready(function (fhirclient) {
 

@@ -6,23 +6,11 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('medicationorders');
-  this.route('conditions');
   this.route('patient');
   this.route('about');
 });
 
 export default Router;
-
-/*
-  need routes for:
-    patient - default?
-    medicationorders
-    conditions
-
-    ember generate route medicationorders
-    ember generate route conditions
-    */
 
 /* need a objects for:
     vitals/observations (possibly combine with Lab)

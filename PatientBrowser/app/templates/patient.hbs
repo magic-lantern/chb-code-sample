@@ -4,6 +4,12 @@
       <div class="row zeroborder">
       <h3>Patient Information</h3>
       <dl class="dl-horizontal zeroborder">
+
+        {{#each model as |patient|}}
+          <p>test</p>
+          {{patient.patientId}}
+        {{/each}}
+
         <dt>Name</dt>
         <dd>{{fc.patient.formatted_name}}
         </dd>
