@@ -28,18 +28,13 @@ export default Ember.Service.extend({
   patientContext: null,
   fhirclient: null,
   fhirPatient: null,
-  isAuthenticated: false,
   isLoading: true,
   fhirFailed: false,
-  isPediatric: false,
   birthDateChanged: Ember.observer('patient.birthDate', function() {
     var retval = 0;
     if (!Ember.isNone(this.patient.birthDate)) {
       var bday = moment(this.patient.birthDate, ENV.APP.date_format);
       retval = moment().diff(bday, 'years');
-      if (retval < 19) {
-        this.set('isPediatric', true);
-      }
       if (retval <= 2) {
         this.set('patient.age_value', moment().diff(bday, 'months'));
         this.set('patient.age_unit', 'months');
@@ -70,45 +65,73 @@ export default Ember.Service.extend({
     //   Ember.$.getScript("https://sandbox.hspconsortium.org/dstu2/fhir-client/fhir-client.js")
     Ember.$.getScript("/js/fhir-client.js")
     .done(function() {
-      FHIR.oauth2.ready(function (fhirclient) {
-        self.set('isAuthenticated', true);
-        self.set('fhirclient', fhirclient);
-        if(!Ember.isNone(fhirclient)) {
-          console.log("fhirclient : ", fhirclient);
-          if(!Ember.isNone(fhirclient.patient)) {
-            console.log("fhirclient.patient : ", fhirclient.patient);
-            self.set('patientContext', fhirclient.patient);
-            Ember.$.when(self.patientContext.read())
-            .done(function(p){
-              console.log("Patient: ", p);
-              self.set('fhirPatient', p);
-              var name = p.name[0];
-              self.patient.formatted_name = name.given.join(" ") + " " + name.family;
-              if(!Ember.isNone(p.address)) {
-                self.patient.formatted_address = p.address[0].line[0] + ', ' + p.address[0].city + ', ' + p.address[0].state;
-              }
-              self.set('patient.birthDate', p.birthDate);
-              self.set('patient.gender', p.gender);
-              self.readHeight();
-              self.readWeight();
-              self.readTemp();
-              self.readBP();
-              self.readMedications();
-              self.readAllergies();
-              self.readConditions();
-              self.readLabs();
-              self.readEncounters();
-              clearTimeout(timeout);
-              self.set('isLoading', false);
-            });
-          }
+      var fhirclient = FHIR.client({
+        'serviceUrl': 'https://sb-fhir-dstu2.smarthealthit.org/api/smartdstu2/open',
+        'auth' : {
+          type: 'none'
         }
+      });
+      self.set('fhirclient', fhirclient);
+      fhirclient.api.search({
+        'type': 'Patient',
+        'named' : '$everything'
+      }).done(function(patientList){
+        clearTimeout(timeout);
+        self.set('isLoading', false);
+        console.log('results');
+        console.log(patientList);
+        if (!Ember.isNone(patientList.data.entry)) {
+          patientList.data.entry.forEach(function(patient) {
+            console.log(patient);
+          });
+        }
+      })
+      .fail(function(){
+        console.log('called fail function from search');
+        self.set('fhirFailed', true);
       });
       console.log("service - FHIR script loaded successfully.");
     })
     .fail(function() {
       console.log("service - FHIR script FAILED to load.");
     });
+  },
+  readPatient: function() {
+    /*
+    FHIR.oauth2.ready(function (fhirclient) {
+
+      if(!Ember.isNone(fhirclient)) {
+        console.log("fhirclient : ", fhirclient);
+        if(!Ember.isNone(fhirclient.patient)) {
+          console.log("fhirclient.patient : ", fhirclient.patient);
+          self.set('patientContext', fhirclient.patient);
+          Ember.$.when(self.patientContext.read())
+          .done(function(p){
+            console.log("Patient: ", p);
+            self.set('fhirPatient', p);
+            var name = p.name[0];
+            self.patient.formatted_name = name.given.join(" ") + " " + name.family;
+            if(!Ember.isNone(p.address)) {
+              self.patient.formatted_address = p.address[0].line[0] + ', ' + p.address[0].city + ', ' + p.address[0].state;
+            }
+            self.set('patient.birthDate', p.birthDate);
+            self.set('patient.gender', p.gender);
+            self.readHeight();
+            self.readWeight();
+            self.readTemp();
+            self.readBP();
+            self.readMedications();
+            self.readAllergies();
+            self.readConditions();
+            self.readLabs();
+            self.readEncounters();
+            clearTimeout(timeout);
+            self.set('isLoading', false);
+          });
+        }
+      }
+    });
+    */
   },
   readWeight: function() {
     var self = this;
