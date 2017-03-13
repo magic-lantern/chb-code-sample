@@ -86,7 +86,9 @@ export default Ember.Service.extend({
           patientList.data.entry.forEach(function(patient) {
             console.log(patient);
             var patientret = store.createRecord('patient', {
-              'patientId': patient.resource.id
+              'patientId': patient.resource.id,
+              'formatted_name' : patient.resource.name[0].given.join(" ") + " " + patient.resource.name[0].family[0],
+              'last_name' : patient.resource.name[0].family[0]
             });
             self.readPatient(patientret);
           });

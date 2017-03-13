@@ -3,6 +3,7 @@ import DS from 'ember-data';
 export default DS.Model.extend({
   patientId: DS.attr('string'),
   formatted_name: DS.attr('string'),
+  last_name: DS.attr('string'),
   gender: DS.attr('string'),
   birthDate: DS.attr('date'),
   formatted_address: DS.attr('string'),
