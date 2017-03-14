@@ -95,16 +95,15 @@ dd > span, .faded {
   border: 3px solid #B0B0B0;
   margin: 1rem;
 }
-.navcontent {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  margin-right: 1rem;
-}
 .fa {
   font-size: 125%;
 }
-.fa-check-circle-o {
+.fa-check-circle-o.selected {
   color: green;
+}
+.fa-check-circle-o {
+  color: #ddd;
+  text-align: right;
 }
 .fa-times-circle-o {
   color: red;
@@ -148,4 +147,21 @@ dd > span, .faded {
   margin-bottom: 0;
   margin-right: 0;
   font-size: 175%;
+}
+.border {
+  padding-top: 1.4rem;
+  padding-bottom: 1.4rem;
+  box-shadow: 0 0 2px #ddd;
+}
+.nav a.patientList {
+  margin-left: 10px;
+  padding: 10px 10px;
+}
+.navcontent {
+  margin-bottom: -10px;
+  margin-top: -10px;
+  padding: 0;
+  position: absolute;
+  top: 2.1rem;
+  left: -1rem;
 }

@@ -5,15 +5,18 @@ export default Ember.Component.extend({
   meds: null,
   index: 0,
   display: null,
+  date: null,
   shouldShow: false,
-  init() {
-    this._super(...arguments);
+  onChange: function () {
     if(!Ember.isEmpty(this.meds) && !Ember.isEmpty(this.meds[this.index])){
-      for (let i in this.meds[this.index]) {
-        this.set(i, this.meds[this.index][i]);
-      }
-      this.set('display', this.display.capitalize());
+      this.set('display', this.meds[this.index].display.capitalize());
+      this.set('date', this.meds[this.index].date);
       this.set('shouldShow', true);
     }
-  },
+    else {
+      this.set('display', null);
+      this.set('date', null);
+      this.set('shouldShow', false);
+    }
+  }.observes('meds')
 });

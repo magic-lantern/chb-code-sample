@@ -11,14 +11,20 @@ export default Ember.Component.extend({
   substance: null,
   text: null,
   shouldShow: false,
-  init() {
-    this._super(...arguments);
+  onChange: function () {
     if(!Ember.isEmpty(this.allergies) && !Ember.isEmpty(this.allergies[this.index])){
       for (let i in this.allergies[this.index]) {
         this.set(i, this.allergies[this.index][i]);
       }
-      this.set('substance', this.substance.capitalize());
+      this.set('substance', this.allergies[this.index].substance.capitalize());
       this.set('shouldShow', true);
     }
-  },
+    else {
+      this.set('category', null);
+      this.set('substance', null);
+      this.set('severity', null);
+      this.set('date', null);
+      this.set('shouldShow', false);
+    }
+  }.observes('allergies'),
 });

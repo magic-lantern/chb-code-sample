@@ -31,6 +31,7 @@ module.exports = function(environment) {
       lab_exclusions: ['55284-4', '8480-6', '8462-4', '3141-9', '8310-5', '8302-2'],
       aom_temp_threshold: 39,
       strep_temp_threshold: 38,
+      serviceUrl: 'https://sb-fhir-dstu2.smarthealthit.org/api/smartdstu2/open',
     }
   };
 

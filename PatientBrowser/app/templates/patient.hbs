@@ -1,138 +1,153 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-6 border">
-      <div class="row zeroborder">
-      <h3>Patient Information</h3>
-      <dl class="dl-horizontal zeroborder">
-
-        {{#each model as |patient|}}
-          {{patient.formatted_name}}
-        {{/each}}
-
-        <dt>Name</dt>
-        <dd>{{fc.patient.formatted_name}}
-        </dd>
-        <dt>Birth Date</dt>
-        <dd>{{fc.patient.birthDate}}</dd>
-        <dt>Sex</dt>
-        <dd>{{fc.patient.gender}}</dd>
-        <dt>Address</dt>
-        <dd>{{fc.patient.formatted_address}}</dd>
-      </dl>
-    </div>
-    <div class="row zeroborder">
-      <p class="lead">Recent Vitals</p>
-      <dl class="dl-horizontal zeroborder">
-        <dt>Height</dt>
-        <dd>{{round fc.patient.height.value}} {{fc.patient.height.unit}} <span class="patientspan">{{fc.patient.height.date}}</span></dd>
-        <dt>Weight</dt>
-        <dd>{{round fc.patient.weight.value}} {{fc.patient.weight.unit}} <span class="patientspan">{{fc.patient.weight.date}}</span></dd>
-        <dt>Temperature</dt>
-        <dd>{{round fc.patient.temp.value}} {{fc.patient.temp.unit}} <span class="patientspan">{{fc.patient.temp.date}}</span></dd>
-        <dt>BP Systolic</dt>
-        <dd>{{fc.patient.bloodpressure.systolic.value}} {{fc.patient.bloodpressure.systolic.unit}}
-          <span class="patientspan">{{fc.patient.bloodpressure.systolic.date}}</span></dd>
-        <dt>BP Diastolic</dt>
-        <dd>{{fc.patient.bloodpressure.diastolic.value}} {{fc.patient.bloodpressure.diastolic.unit}}
-          <span class="patientspan">{{fc.patient.bloodpressure.diastolic.date}}</span></dd>
-      </dl>
-    </div>
-  </div>
-    <div class="col-md-6 border">
-      <h3>Reason for current visit</h3>
-      <p>Unknown</p>
-      <p class="lead">Recent Patient Encounters</p>
-      {{encounter-list encounters=fc.patient.encounters index=0}}
-      {{encounter-list encounters=fc.patient.encounters index=1}}
-      {{encounter-list encounters=fc.patient.encounters index=2}}
-      {{encounter-list encounters=fc.patient.encounters index=3}}
-      {{encounter-list encounters=fc.patient.encounters index=4}}
-      {{#unless fc.patient.encounters}}
-      <p>No Recent Encounters</p>
-      {{/unless}}
-    </div>
-  </div>
+<div class="col-md-2 border">
+  <ul class="nav nav-pills nav-stacked patientList">
+    <li class="lead">Patient List</li>
+    {{#each sortedPatients as |patient|}}
+      <li role="presentation" id='li_{{patient.patientId}}'><i class="navcontent fa fa-check-circle-o" aria-hidden="true" id='check_{{patient.patientId}}' {{action "selectPatient" patient}}></i><a class="patientList" {{action "viewPatient" patient}}>{{patient.formatted_name}}</a></li>
+    {{/each}}
+  </ul>
 </div>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-1">
-    </div>
-    <div class="col-md-5">
-      <h3>Condition List</h3>
-      {{condition-list conditions=fc.patient.conditions index=0 highlight_color='bg-infolight-a'}}
-      {{condition-list conditions=fc.patient.conditions index=1 highlight_color='bg-infolight-b'}}
-      {{condition-list conditions=fc.patient.conditions index=2 highlight_color='bg-infolight-a'}}
-      {{condition-list conditions=fc.patient.conditions index=3 highlight_color='bg-infolight-b'}}
-      {{condition-list conditions=fc.patient.conditions index=4 highlight_color='bg-infolight-a'}}
-      <div class="row info">
-        {{#if fc.patient.conditions}}
-        Total Conditions: {{fc.patient.conditions.length}}
-        {{else}}
-        <p>No Documented Conditions</p>
-        {{/if}}
+
+
+<!--
+
+Example of check
+Example of check-circle
+Example of check-circle-o
+Example of check-square
+Example of check-square-o
+-->
+<div class="col-md-10">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5">
+        <div class="row zeroborder">
+        <h3>Patient Information</h3>
+        <dl class="dl-horizontal zeroborder">
+          <dt>Name</dt>
+          <dd>{{currentPatient.formatted_name}}
+          </dd>
+          <dt>Birth Date</dt>
+          <dd>{{currentPatient.birthDate}}</dd>
+          <dt>Sex</dt>
+          <dd>{{currentPatient.gender}}</dd>
+          <dt>Address</dt>
+          <dd>{{currentPatient.formatted_address}}</dd>
+        </dl>
+      </div>
+      <div class="row zeroborder">
+        <p class="lead">Recent Vitals</p>
+        <dl class="dl-horizontal zeroborder">
+          <dt>Height</dt>
+          <dd>{{round currentPatient.height.value}} {{currentPatient.height.unit}} <span class="patientspan">{{currentPatient.height.date}}</span></dd>
+          <dt>Weight</dt>
+          <dd>{{round currentPatient.weight.value}} {{currentPatient.weight.unit}} <span class="patientspan">{{currentPatient.weight.date}}</span></dd>
+          <dt>Temperature</dt>
+          <dd>{{round currentPatient.temp.value}} {{currentPatient.temp.unit}} <span class="patientspan">{{currentPatient.temp.date}}</span></dd>
+          <dt>BP Systolic</dt>
+          <dd>{{currentPatient.bloodpressure.systolic.value}} {{currentPatient.bloodpressure.systolic.unit}}
+            <span class="patientspan">{{currentPatient.bloodpressure.systolic.date}}</span></dd>
+          <dt>BP Diastolic</dt>
+          <dd>{{currentPatient.bloodpressure.diastolic.value}} {{currentPatient.bloodpressure.diastolic.unit}}
+            <span class="patientspan">{{currentPatient.bloodpressure.diastolic.date}}</span></dd>
+        </dl>
       </div>
     </div>
-
-    <div class="col-md-1">
-    </div>
-
-    <div class="col-md-5">
-      <h3>Medication History</h3>
-      {{medication-list meds=fc.patient.medications index=0 highlight_color='bg-infolight-b'}}
-      {{medication-list meds=fc.patient.medications index=1 highlight_color='bg-infolight-a'}}
-      {{medication-list meds=fc.patient.medications index=2 highlight_color='bg-infolight-b'}}
-      {{medication-list meds=fc.patient.medications index=3 highlight_color='bg-infolight-a'}}
-      {{medication-list meds=fc.patient.medications index=4 highlight_color='bg-infolight-b'}}
-      <div class="row info">
-        {{#if fc.patient.medications}}
-        Total Medications: {{fc.patient.medications.length}}
-        {{else}}
-        <p>No Medication History</p>
-        {{/if}}
-      </div>
-      <div class="row">
-        <p>&nbsp;</p>
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="row">
-    <div class="col-md-1">
-    </div>
-    <div class="col-md-5">
-      <h3>Recent Lab Results</h3>
-      {{lab-list labs=fc.patient.labs index=0 highlight_color='bg-infolight-a'}}
-      {{lab-list labs=fc.patient.labs index=1 highlight_color='bg-infolight-b'}}
-      {{lab-list labs=fc.patient.labs index=2 highlight_color='bg-infolight-a'}}
-      {{lab-list labs=fc.patient.labs index=3 highlight_color='bg-infolight-b'}}
-      {{lab-list labs=fc.patient.labs index=4 highlight_color='bg-infolight-a'}}
-      <div class="row info">
-        {{#unless fc.patient.labs}}
-        <p>No Recent Labs</p>
+      <div class="col-md-5">
+        <h3>Reason for current visit</h3>
+        <p>Unknown</p>
+        <p class="lead">Recent Patient Encounters</p>
+        {{encounter-list encounters=currentPatient.encounters index=0}}
+        {{encounter-list encounters=currentPatient.encounters index=1}}
+        {{encounter-list encounters=currentPatient.encounters index=2}}
+        {{encounter-list encounters=currentPatient.encounters index=3}}
+        {{encounter-list encounters=currentPatient.encounters index=4}}
+        {{#unless currentPatient.encounters}}
+        <p>No Recent Encounters</p>
         {{/unless}}
       </div>
     </div>
-    <div class="col-md-1">
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+      </div>
+      <div class="col-md-5">
+        <h3>Condition List</h3>
+        {{condition-list conditions=currentPatient.conditions index=0 highlight_color='bg-infolight-a'}}
+        {{condition-list conditions=currentPatient.conditions index=1 highlight_color='bg-infolight-b'}}
+        {{condition-list conditions=currentPatient.conditions index=2 highlight_color='bg-infolight-a'}}
+        {{condition-list conditions=currentPatient.conditions index=3 highlight_color='bg-infolight-b'}}
+        {{condition-list conditions=currentPatient.conditions index=4 highlight_color='bg-infolight-a'}}
+        <div class="row info">
+          {{#if currentPatient.conditions}}
+          Total Conditions: {{currentPatient.conditions.length}}
+          {{else}}
+          <p>No Documented Conditions</p>
+          {{/if}}
+        </div>
+      </div>
+
+      <div class="col-md-1">
+      </div>
+
+      <div class="col-md-5">
+        <h3>Medication History</h3>
+        {{medication-list meds=currentPatient.medications index=0 highlight_color='bg-infolight-b'}}
+        {{medication-list meds=currentPatient.medications index=1 highlight_color='bg-infolight-a'}}
+        {{medication-list meds=currentPatient.medications index=2 highlight_color='bg-infolight-b'}}
+        {{medication-list meds=currentPatient.medications index=3 highlight_color='bg-infolight-a'}}
+        {{medication-list meds=currentPatient.medications index=4 highlight_color='bg-infolight-b'}}
+        <div class="row info">
+          {{#if currentPatient.medications}}
+          Total Medications: {{currentPatient.medications.length}}
+          {{else}}
+          <p>No Medication History</p>
+          {{/if}}
+        </div>
+        <div class="row">
+          <p>&nbsp;</p>
+        </div>
+
+      </div>
+
     </div>
-    <div class="col-md-5">
-      <h3>Allergies</h3>
-      {{allergy-list allergies=fc.patient.allergies index=0 highlight_color='bg-infolight-b'}}
-      {{allergy-list allergies=fc.patient.allergies index=1 highlight_color='bg-infolight-a'}}
-      {{allergy-list allergies=fc.patient.allergies index=2 highlight_color='bg-infolight-b'}}
-      {{allergy-list allergies=fc.patient.allergies index=3 highlight_color='bg-infolight-a'}}
-      {{allergy-list allergies=fc.patient.allergies index=4 highlight_color='bg-infolight-b'}}
-      <div class="row info">
-        {{#if fc.patient.allergies}}
-        Total Allergies: {{fc.patient.allergies.length}}
-        {{else}}
-        <p>No Allergy History</p>
-        {{/if}}
+
+    <div class="row">
+      <div class="col-md-1">
+      </div>
+      <div class="col-md-5">
+        <h3>Recent Lab Results</h3>
+        {{lab-list labs=currentPatient.labs index=0 highlight_color='bg-infolight-a'}}
+        {{lab-list labs=currentPatient.labs index=1 highlight_color='bg-infolight-b'}}
+        {{lab-list labs=currentPatient.labs index=2 highlight_color='bg-infolight-a'}}
+        {{lab-list labs=currentPatient.labs index=3 highlight_color='bg-infolight-b'}}
+        {{lab-list labs=currentPatient.labs index=4 highlight_color='bg-infolight-a'}}
+        <div class="row info">
+          {{#unless currentPatient.labs}}
+          <p>No Recent Labs</p>
+          {{/unless}}
+        </div>
+      </div>
+      <div class="col-md-1">
+      </div>
+      <div class="col-md-5">
+        <h3>Allergies</h3>
+        {{allergy-list allergies=currentPatient.allergies index=0 highlight_color='bg-infolight-b'}}
+        {{allergy-list allergies=currentPatient.allergies index=1 highlight_color='bg-infolight-a'}}
+        {{allergy-list allergies=currentPatient.allergies index=2 highlight_color='bg-infolight-b'}}
+        {{allergy-list allergies=currentPatient.allergies index=3 highlight_color='bg-infolight-a'}}
+        {{allergy-list allergies=currentPatient.allergies index=4 highlight_color='bg-infolight-b'}}
+        <div class="row info">
+          {{#if currentPatient.allergies}}
+          Total Allergies: {{currentPatient.allergies.length}}
+          {{else}}
+          <p>No Allergy History</p>
+          {{/if}}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
 {{outlet}}

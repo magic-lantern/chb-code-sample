@@ -2,12 +2,31 @@
 
 Frontend code sample (est. time 2 hours): Create a prototype of a web based tool to enable app developers to browse the SMART sample patient set to find a list of appropriate patient ids to use when demonstrating their app. This tool should run entirely on the front end and should use the open FHIR endpoint at https://sb-fhir-dstu2.smarthealthit.org/api/smartdstu2/open to retrieve the patient lists and details (I’d suggest using the Patient resource query and the “$everything” operation). Any frontend javascript framework (or none) is acceptable. Functionality that is designed but not implemented can be indicated through failing unit tests or placeholder comments in the code.
 
-Technologies employed:
+**Features**
+* Patient Browser is modeled after a Primary Care Provider summary screen.
+* Patient List is sorted by last name
+* Patients can be selected for inclusion in list. Variable selectedPatients keeps track of selected patients.
+* When user clicks patient name from list, show patient info in main screen
+
+**Technologies employed:**
 * [EmberJS](http://emberjs.com/)
 * [Bootstrap](http://getbootstrap.com/)
 * [Font Awesome](https://fortawesome.github.io/Font-Awesome/)
 * [FHIR](https://www.hl7.org/fhir/)
-* [SMART on FHIR](http://smarthealthit.org/)
+
+## TODOs
+1. Need to sort medications, encounters, labs, etc. by date
+1. Need to view other resources returned by FHIR. Currently only showing a limited number of these:
+ * Condition
+ * MedicationOrder
+ * AllergyIntolerance
+ * Encounter
+1. Need method to view all items for each resources returned by FHIR. Currently only showing 5 items.
+1. Variable selectedPatients is maintained, but not exportable nor passed on to other processes.
+1. Ability to page through patient list - or use server side search/count limit. Right now all data is returned and displayed.
+1. Need error handling for subsequent patient $everything request
+1. Need to retrieve observations for standard vitals - heart rate, blood pressure, weight, etc.
+1. Need to write unit tests.
 
 ## Prerequisites
 

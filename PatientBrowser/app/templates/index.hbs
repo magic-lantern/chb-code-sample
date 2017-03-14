@@ -7,19 +7,16 @@ to retrieve the patient lists and details (I’d suggest using the Patient resou
 that is designed but not implemented can be indicated through failing unit tests or placeholder
 comments in the code.</p>
 
-
-{{#if fc.fhirFailed}}
-  <div class="alert alert-danger" role="alert">
-    Problem loading patient data. Cannot browse patients.
-  </div>
-{{/if}}
-
 {{#if fc.isLoading}}
     <div class="alert alert-info" role="alert">Loading Application Data... Waiting up to 10 seconds.</div>
 {{else}}
-  {{#unless fc.fhirFailed}}
-    <h5 class="topspacing">Patients have loaded. Navigate to patient browser by following link in header.</h5>
-  {{/unless}}
+  {{#if fc.fhirFailed}}
+    <div class="alert alert-danger" role="alert">
+      Problem loading patient data. Cannot browse patients.
+    </div>
+  {{else}}
+      <h5 class="topspacing">Patients have loaded. Navigate to patient browser by following link in header.</h5>
+  {{/if}}
 {{/if}}
   <br/>
   <br/>

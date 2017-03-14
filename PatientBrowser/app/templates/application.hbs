@@ -14,9 +14,11 @@
         <ul class="nav navbar-nav">
           <li>{{link-to "App Home" "index"}}</li>
           {{#unless fc.isLoading}}
-          <li>{{link-to "Patient Browser" "patient"}}</li>
-          {{else}}
-          <li><i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i></li>
+            {{#unless fc.fhirFailed}}
+            <li>{{link-to "Patient Browser" "patient"}}</li>
+            {{/unless}}
+            {{else}}
+            <li><i class="fa fa-spinner fa-pulse fa-fw" aria-hidden="true"></i></li>
           {{/unless}}
         </ul>
       </div>
