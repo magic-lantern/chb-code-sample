@@ -1,6 +1,5 @@
 /* global FHIR */
 import Ember from 'ember';
-import moment from 'moment';
 import ENV from '../config/environment';
 
 export default Ember.Service.extend({
